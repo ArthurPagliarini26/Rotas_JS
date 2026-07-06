@@ -1,0 +1,25 @@
+create database sistema_viagens;
+use sistema_viagens;
+
+create table destinos(id int auto_increment primary key, nome varchar(100), pais varchar(100));
+
+INSERT INTO destinos (nome, pais) VALUES
+    ("Paris", "França"),
+    ("Roma", "Itália"),
+    ("Orlando", "EUA");
+
+create table clientes(id int auto_increment primary key, nome varchar(100), email varchar(100), telefone varchar(100));
+
+INSERT INTO clientes (nome, email, telefone) VALUES
+    ("Arthur", "arthur@gmail.com", "479999999"),
+    ("Igor", "igor@gmail.com", "478888888"),
+    ("Rafael", "rafael@gmail.com", "477777777");
+    
+create table reservas(id int auto_increment primary key, id_cliente int, foreign key(id_cliente) references clientes(id), id_destino int, foreign key(id_destino) references destinos(id),  data_reserva varchar(100));
+
+INSERT INTO reservas (id_cliente, id_destino, data_reserva) VALUES
+    (1, 1, "10/08/2026"),
+    (2, 3, "15/09/2026"),
+    (3, 2, "20/10/2026");
+    
+select * from clientes;
