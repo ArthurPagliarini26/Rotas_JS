@@ -6,8 +6,7 @@ const server = express();
 
 //Middleware que permite o servidor entender requisições com JSON no corpo (req.body)
 server.use(express.json());
-
-const cursos = ['Node JS', 'JavaScript', 'React Native'];
+server.use(cors());
 
 //===================================
 //Método HTTP: GET
@@ -27,12 +26,16 @@ server.get('/cursos', (req, res) => {
 //LISTAR UM UNICO CURSO
 //localhost:3000/curso/2
 server.get('/cursos/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = 'SELECT * FROM cursos WHERE id = ?';
 
-    // Desestrutura o parâmetro "index" vindo da URL
-    const id = req.params.id;        
+    connection.query(sql, [id], (erro, resultados) => {
+        if (erro) {
+            return res.status(500).json({ erro: erro.message });
+        }
 
-    // Retorna o curso correspondente ao índice informado
-    return res.json(cursos[id]);
+        return res.json(resultados[0]);
+    });
 });
 
 //Método HTTP: POST
